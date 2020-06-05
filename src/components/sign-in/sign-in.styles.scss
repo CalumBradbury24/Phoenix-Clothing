@@ -1,0 +1,14 @@
+.sign-in{
+    width: 380px; //always 30% of total width of page
+    display: flex;
+    flex-direction: column; //all elements sit vertically
+}
+
+.title{
+    margin: 10px;
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-between;
+}
