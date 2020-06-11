@@ -7,13 +7,16 @@ import './sign-up.styles.scss';
 
 class SignUp extends React.Component{
     
-   
-       state = {
-            displayName: '',
-            email: '',
-            password: '',
-            confirmPassword: ''
-        }
+    constructor() {
+        super();
+    
+        this.state = {
+          displayName: '',
+          email: '',
+          password: '',
+          confirmPassword: ''
+        };
+      }
     
     
 
@@ -22,27 +25,30 @@ handleSubmit = async event => {
     event.preventDefault(); //prevent default form submit action
 
     const { displayName, email, password, confirmPassword } = this.state;
-     if(password !== confirmPassword){
-        alert("Entered passwords do not match");
+    if (password !== confirmPassword) {
+        alert("passwords don't match");
         return;
-     }
-
-     try{
-        const { user } = await auth.createUserWithEmailAndPassword(email, password);//firebase function for creating new user in database
-       
+      }
+  
+      try {
+        const { user } = await auth.createUserWithEmailAndPassword(
+          email,
+          password
+        );
+  
         await createUserProfileDocument(user, { displayName });
-        
+  
         this.setState({
-            displayName: '',
-            email: '',
-            password: '',
-            confirmPassword: ''
+          displayName: '',
+          email: '',
+          password: '',
+          confirmPassword: ''
         });
-
-     }catch(error){
+      } catch (error) {
         console.error(error);
-     }
-};
+      }
+    };
+  
 
 
     handleChange = event => {
@@ -51,21 +57,49 @@ handleSubmit = async event => {
     };
 
 
-render(){
-    const { displayName, email, password, confirmPassword } = this.state;
-    return(
-        <div className='sign-up'>
-            <h2 className='title'>I do not have an account</h2>
+    render() {
+        const { displayName, email, password, confirmPassword } = this.state;
+        return (
+          <div className='sign-up'>
+            <h2 className='title'>I do not have a account</h2>
             <span>Sign up with your email and password</span>
             <form className='sign-up-form' onSubmit={this.handleSubmit}>
-                <FormInput type='text' name='displayName' value={displayName} onChange={this.handleChange} label='Display Name' required></FormInput>
-                <FormInput type='email' name='email' value={email} onChange={this.handleChange} label='email' required></FormInput>
-                <FormInput type='password' name='password' value={password} onChange={this.handleChange} label='password' required></FormInput>
-                <FormInput type='password' name='confirmPassword' value={confirmPassword} onChange={this.handleChange} label='Confirm Password' required></FormInput>
-                <CustomButton type='submit'>SIGN UP</CustomButton>
+              <FormInput
+                type='text'
+                name='displayName'
+                value={displayName}
+                onChange={this.handleChange}
+                label='Display Name'
+                required
+              />
+              <FormInput
+                type='email'
+                name='email'
+                value={email}
+                onChange={this.handleChange}
+                label='Email'
+                required
+              />
+              <FormInput
+                type='password'
+                name='password'
+                value={password}
+                onChange={this.handleChange}
+                label='Password'
+                required
+              />
+              <FormInput
+                type='password'
+                name='confirmPassword'
+                value={confirmPassword}
+                onChange={this.handleChange}
+                label='Confirm Password'
+                required
+              />
+              <CustomButton type='submit'>SIGN UP</CustomButton>
             </form>
-        </div>
-    )
-}
-}
+          </div>
+        );
+      }
+    }
 export default SignUp;

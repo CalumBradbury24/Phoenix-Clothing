@@ -13,13 +13,16 @@ const config = {
   measurementId: "G-7KCSN5G5GT",
 };
 
+firebase.initializeApp(config);
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if(!userAuth) {//If user auth object doesn't exist
     return;
   }
   
- const userRef = firestore.doc(`users/${userAuth.uid}`);
- const snapShot = await userRef.get();
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
+
+  const snapShot = await userRef.get();
 
  if(!snapShot.exists){//Check if any data exists in this place
    const { displayName, email } = userAuth;
@@ -31,7 +34,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
       email,
       createdAt,
       ...additionalData //spread in any other additional data
-    })
+    });
    }catch(error){
     console.log("error creating user", error.message);
    }
@@ -39,14 +42,14 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
  return userRef;
 };
 
-firebase.initializeApp(config);
+
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 //Google authentication utility
 const provider = new firebase.auth.GoogleAuthProvider(); //Gives access to GoogleAuth class from authentication library
-provider.setCustomParameters({ prompt: "select_account" });
+provider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 export default firebase;
