@@ -5,7 +5,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import "./App.css";
+
 import HomePage from "./pages/homepage/homepage";
 import ShopPage from "./pages/shop/shopComponent";
 import Header from "./components/header/header";
@@ -16,6 +16,8 @@ import { setCurrentUser } from "./redux/user/user.actions";
 import { selectCurrentUser } from './redux/user/user-selectors';
 import { createStructuredSelector } from 'reselect';
 import CheckoutPage from "./pages/checkout/checkout";
+
+import { GlobalStyle } from './global.styles';
 
 class App extends React.Component {
   unsubscribeFromAuth = null; //Prevent memory leaks
@@ -49,6 +51,7 @@ class App extends React.Component {
     return (
       <div>
         <Router>
+        <GlobalStyle/>
           <Header />
           <Switch>
             {/* A <Switch> looks through its children <Route>s and
