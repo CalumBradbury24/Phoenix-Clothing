@@ -57,7 +57,14 @@ const SHOP_DATA = {
         name: 'Blue Snapback',
         imageUrl: 'https://i.ibb.co/X2VJP2W/blue-snapback.png',
         price: 14
+      },
+      {
+        id: 36,
+        name: "Black snapback",
+        imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
+        price: 15,
       }
+      
     ]
   },
   trainers: {
