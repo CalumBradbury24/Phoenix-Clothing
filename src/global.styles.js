@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-
+//everything in app takes these styles
 export const GlobalStyle = createGlobalStyle`
 	body {
 		font-family: 'Open Sans Condensed';
