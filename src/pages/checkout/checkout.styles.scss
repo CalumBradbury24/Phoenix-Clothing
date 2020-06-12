@@ -35,6 +35,10 @@
       margin-top: 30px;
       margin-left: auto;
       font-size: 36px;
+
+      @media screen and (max-width: 800px) {
+        font-size: 20px;
+      }
     }
 
     button{
@@ -47,6 +51,11 @@
       margin-bottom: 10px;
       font-size: 22px;
       color: #002bff;
+
+      @media screen and (max-width: 800px) {
+        font-size: 14px;
+      }
+
     }
   }
   
