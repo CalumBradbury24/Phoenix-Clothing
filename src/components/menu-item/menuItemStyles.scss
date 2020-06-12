@@ -8,7 +8,9 @@
     border: 1px solid black;
     margin: 0 7.5px 15px;
     overflow: hidden;
-    
+
+   
+
     &:hover{
       cursor: pointer;
 
@@ -25,6 +27,9 @@
     //if menu item also has "large" in properties/styling then..
     &.large{
       height: 380px;
+      @media screen and (max-width: 800px) {
+        height: 240px;
+      }
     }
   
     &:first-child { //Only affects first child in the menu-item styled div
@@ -35,9 +40,7 @@
       margin-left: 7.5px;
     }
 
-    @media screen and (max-width: 800px) {
-      height: 200px;
-    }
+   
 
     .background-image{
       width: 100%;

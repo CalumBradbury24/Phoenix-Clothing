@@ -1,5 +1,5 @@
 .checkout-item {
-    width: 100%;
+    width: 130%;
     display: flex;
     min-height: 100px;
     border-bottom: 1px solid darkgrey;
@@ -20,6 +20,16 @@
     .quantity,
     .price {
       width: 23%;
+
+      @media screen and (max-width: 800px) {
+         
+        font-size: 16px;
+      }
+
+      @media screen and (max-width: 399px) {
+         
+        font-size: 14px;
+      }
     }
   
     .quantity {

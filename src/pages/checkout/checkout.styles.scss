@@ -7,7 +7,7 @@
     margin: 50px auto 0;
   
     .checkout-header {
-      width: 100%;
+      width: 130%;
       padding: 10px 0;
       display: flex;
       justify-content: space-between;
@@ -19,6 +19,14 @@
   
         &:last-child {
           width: 8%;
+        }
+        @media screen and (max-width: 800px) {
+         
+          font-size: 12px;
+        }
+  
+        @media screen and (max-width: 399px) {
+          font-size: 12px;
         }
       }
     }
