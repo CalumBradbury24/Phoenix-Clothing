@@ -42,6 +42,11 @@
         border: none;
       }
     }
+
+    @media screen and (max-width:411px) {
+      padding: 0 45px 0 45px;
+    
+    }
     
   }
 

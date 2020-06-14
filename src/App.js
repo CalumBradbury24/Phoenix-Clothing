@@ -10,15 +10,16 @@ import HomePage from "./pages/homepage/homepage";
 import ShopPage from "./pages/shop/shopComponent";
 import Header from "./components/header/header";
 import SignInAndSignUpPage from "./pages/SignIn-Up/SignIn-Up";
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.actions";
-import { selectCurrentUser } from './redux/user/user-selectors';
-import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from "./redux/user/user-selectors";
+import { createStructuredSelector } from "reselect";
 import CheckoutPage from "./pages/checkout/checkout";
-import ContactPage from './pages/contact/contact';
+import ContactPage from "./pages/contact/contact";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+//import { selectCollectionsForPreview } from './redux/shop/shop.selectors';
 
-import { GlobalStyle } from './global.styles';
+import { GlobalStyle } from "./global.styles";
 
 class App extends React.Component {
   unsubscribeFromAuth = null; //Prevent memory leaks
@@ -38,9 +39,10 @@ class App extends React.Component {
             ...snapShot.data(), //spread in rest of data
           });
         });
-      } else {
+      } 
         setCurrentUser(userAuth);
-      }
+        //addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items})));//Send array with the values we want
+      
     });
   }
 
@@ -52,7 +54,7 @@ class App extends React.Component {
     return (
       <div>
         <Router>
-        <GlobalStyle/>
+          <GlobalStyle />
           <Header />
           <Switch>
             {/* A <Switch> looks through its children <Route>s and
@@ -62,16 +64,16 @@ class App extends React.Component {
             <Route path="/contact" component={ContactPage} />
             <Route exact path="/checkout" component={CheckoutPage} />
             <Route
-            exact
-            path='/signin'
-            render={() =>
-              this.props.currentUser ? (
-                <Redirect to='/' />
-              ) : (
-                <SignInAndSignUpPage />
-              )
-            }
-          />
+              exact
+              path="/signin"
+              render={() =>
+                this.props.currentUser ? (
+                  <Redirect to="/" />
+                ) : (
+                  <SignInAndSignUpPage />
+                )
+              }
+            />
           </Switch>
         </Router>
       </div>
@@ -79,12 +81,14 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = createStructuredSelector({ //Get currentUser props from store
+const mapStateToProps = createStructuredSelector({
+  //Get currentUser props from store
   currentUser: selectCurrentUser,
+  //collectionsArray: selectCollectionsForPreview
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user)) //user is payload
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)), //user is payload
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App); //Second argument of connect is mapDispatchToProps
