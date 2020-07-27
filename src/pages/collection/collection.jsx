@@ -23,7 +23,7 @@ const CollectionPage = ({ collection }) => {
 
 //ownProps is second optional argument in mapStateToProps
 const mapStateToProps = (state, ownProps) => ({
-  collection: selectCollection(ownProps.match.params.collectionid)(state)
+  collection: selectCollection(ownProps.match.params.collectionId)(state)
 });
 
 

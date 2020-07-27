@@ -12,14 +12,26 @@ export const selectCollections = createSelector(
 export const selectCollectionsForPreview = createSelector(
   [selectCollections],
   //gets an array = [hats, jackets, trainers, mens, womens]
-  collections => Object.keys(collections).map(key => collections[key]) //gets value of collections object at given key
-);
+  collections => collections ? Object.keys(collections).map(key => collections[key]) //gets value of collections object at given key
+  : []
+  );
 
 //select which selection
 export const selectCollection = collectionUrlParam =>
   createSelector(
     [selectCollections],
-    collections => collections[collectionUrlParam]
+    collections => (collections ? collections[collectionUrlParam] : null)
   );
 
 //^curried function
+
+export const selectIsCollectionFetching = createSelector(
+  [selectShop],
+  shop => shop.isFetching
+)
+
+
+export const selectIsCollectionsLoaded = createSelector(
+  [selectShop],
+  shop => !!shop.collections
+)

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,46 +11,20 @@ import ShopPage from "./pages/shop/shopComponent";
 import Header from "./components/header/header";
 import SignInAndSignUpPage from "./pages/SignIn-Up/SignIn-Up";
 import { connect } from "react-redux";
-import { setCurrentUser } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user-selectors";
 import { createStructuredSelector } from "reselect";
 import CheckoutPage from "./pages/checkout/checkout";
 import ContactPage from "./pages/contact/contact";
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
-//import { selectCollectionsForPreview } from './redux/shop/shop.selectors';
+import { checkUserSession } from './redux/user/user.actions';
 
 import { GlobalStyle } from "./global.styles";
 
-class App extends React.Component {
-  unsubscribeFromAuth = null; //Prevent memory leaks
+const App = ({checkUserSession, currentUser}) => {
 
-  componentDidMount() {
-    const { setCurrentUser } = this.props;
+  useEffect(() => {
+    checkUserSession();
+  }, [checkUserSession])//Similar to componentDidMount
 
-    //Listen to authentication state changes on firebase backend
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        //is there a userAuth?
-        const userRef = await createUserProfileDocument(userAuth); //get userRef from createUserProfileDocument (if no document there a new one is created in this function)
-        //documentSnapshot object allows us to check if a document exists at this query
-        userRef.onSnapshot((snapShot) => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data(), //spread in rest of data
-          });
-        });
-      } 
-        setCurrentUser(userAuth);
-        //addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items})));//Send array with the values we want
-      
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth(); //Close subscription
-  }
-
-  render() {
     return (
       <div>
         <Router>
@@ -67,7 +41,7 @@ class App extends React.Component {
               exact
               path="/signin"
               render={() =>
-                this.props.currentUser ? (
+                currentUser ? (
                   <Redirect to="/" />
                 ) : (
                   <SignInAndSignUpPage />
@@ -79,7 +53,7 @@ class App extends React.Component {
       </div>
     );
   }
-}
+
 
 const mapStateToProps = createStructuredSelector({
   //Get currentUser props from store
@@ -87,8 +61,10 @@ const mapStateToProps = createStructuredSelector({
   //collectionsArray: selectCollectionsForPreview
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)), //user is payload
-});
+const mapDispatchToProps = dispatch => ({
+  checkUserSession: () => dispatch(checkUserSession())
+})
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(App); //Second argument of connect is mapDispatchToProps

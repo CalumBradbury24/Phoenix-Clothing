@@ -1,6 +1,4 @@
 import React from "react";
-
-import { auth } from "../../firebase/firebase.utils";
 import { ReactComponent as Logo } from "../../assets/Phoenix.svg"; //New syntax
 //ReactComponent tells Create React App that you want a React component that renders an SVG, rather than its filename.
 import { connect } from "react-redux"; //Component that lets us modify a component to have access to redux
@@ -9,6 +7,7 @@ import CartDropDown from "../cart-dropdown/cart-dropdown";
 import { createStructuredSelector } from "reselect";
 import { selectCartHidden } from "../../redux/cart/cart-selectors";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
+import { signOutStart } from '../../redux/user/user.actions';
 
 import {
   HeaderContainer,
@@ -18,7 +17,7 @@ import {
 } from "./header.styles";
 
 //Header component recieves currentUser and hidden from the reducer
-const Header = ({ currentUser, hidden }) => (
+const Header = ({ currentUser, hidden, signOutStart }) => (
   <HeaderContainer>
     <LogoContainer to="/">
       <Logo className="logo" />
@@ -27,7 +26,7 @@ const Header = ({ currentUser, hidden }) => (
       <OptionLink to="/shop">SHOP</OptionLink>
       <OptionLink to="/contact">CONTACT</OptionLink>
       {currentUser ? (
-        <OptionLink as="div" onClick={() => auth.signOut()}>
+        <OptionLink as="div" onClick={signOutStart}>
           SIGN OUT
         </OptionLink>
       ) : (
@@ -44,4 +43,8 @@ const mapStateToProps = createStructuredSelector({
   hidden: selectCartHidden,
 });
 
-export default connect(mapStateToProps)(Header); //Connects component to redux store
+const mapDispatchToProps = dispatch => ({
+  signOutStart: () => dispatch(signOutStart())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header); //Connects component to redux store
