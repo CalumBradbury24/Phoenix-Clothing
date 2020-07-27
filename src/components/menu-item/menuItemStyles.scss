@@ -26,7 +26,7 @@
 
     //if menu item also has "large" in properties/styling then..
     &.large{
-      height: 380px;
+      height: 400px;
       @media screen and (max-width: 800px) {
         height: 240px;
       }
