@@ -11,8 +11,6 @@ const ShopPage = ({ match, fetchCollectionsStart }) => {
    fetchCollectionsStart();
  }, [fetchCollectionsStart])//only fire once
 
- 
-    
       return (
       <div className="shop-page">
         <Route
