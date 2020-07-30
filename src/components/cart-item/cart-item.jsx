@@ -13,4 +13,4 @@ const CartItem = ({ item: { imageUrl, price, name, quantity } }) => (
   </div>
 );
 
-export default CartItem;
+export default React.memo(CartItem);//Cart item should only re-render when the item that is passed in ever changes (i.e number of black shirts changes in cart) 
